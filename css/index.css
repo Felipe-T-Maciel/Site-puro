@@ -15,9 +15,10 @@ header{
     align-items: center;
     justify-content: center;
     padding-right: 1rem;
-    padding-left: 1rem;
+    padding-left: 1rem; 
     position: sticky;
     top: 0;
+    z-index: 99999;
 }
 
 body{
@@ -28,19 +29,22 @@ body{
     background-attachment: fixed;
 }
 
-.container >div> img{
+.container > div > img{
     height: 14rem;
+    border-radius: 12px;
     width: 21rem;
     padding: 3rem;
     border: 3px solid white;
     background-color: rgba(128, 128, 128, 0.5);
 }
 
-.container >div> img:hover{
+.container >div > img:hover{
     background-color: rgba(128, 128, 128, 0.9) ;
     border: 3px solid purple;
     transition: .2s all;
-    padding: 5%;
+    scale: 1.05;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .container{
@@ -51,11 +55,11 @@ body{
     font-family: 'Oswald', sans-serif;
 }
 
-.container > div >div>div> p{
-    margin-top: 9px;
+.container > div >div> div> p{
+    margin-top: 7px;
     font-family: 'Inter';
     font-style: normal;
-    font-size: 22px;
+    font-size: 17px;
     line-height: 15px;
     font-family: 'Oswald', sans-serif;
     
@@ -65,10 +69,11 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 .p-price{
-    color:#05FF00;
+    color:purple;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -76,6 +81,47 @@ body{
     display: flex;
     justify-content: center;
 }
+
+.cabecalho-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+}
+
+.carrinho{
+    color: white;
+    cursor: pointer;
+    transition: .2s all;
+}
+
+
+.carrinho:hover{
+    scale: 1.15;
+    transition: .2s all;
+}
+
+.carrinho-aberto {
+    position: absolute;
+    width: 0;
+    background-color: yellow;
+    right: 3%;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, 0.3s ease;
+}
+
+.carrinho-aberto.aberto {
+    height: 50rem;
+    width: 25rem;
+    padding: 2rem;
+    padding-bottom: 25rem;
+}
+
+
+
+
+
 
 .mySlides{
     height: 200px;
@@ -147,11 +193,10 @@ footer{
 .finish>div{
     background-color: white;
     border-radius: 20px;
-    width: 15rem;
 }
 
 .finish-him{
-    background-color: #05FF00;
+    background-color: purple;
     border-radius: 20px;
     margin-top: 30px;
     height: 70px;
@@ -165,8 +210,10 @@ footer{
 .addCart{
     margin-right: 15px;
     width: 6rem;
-    background-color: rgba(5, 255, 0,0.9);
-    border-radius: 20px;
+    color: white;
+    background-color: purple;
+    border-radius: 8px;
+    border: none;
     font-family: 'Kanit', sans-serif;
 }
 
