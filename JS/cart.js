@@ -14,10 +14,12 @@ function ready() {
         carrinho_aberto.classList.toggle("aberto");
     });
 
-    const cartRemove = document.getElementsByClassName("cart-remover")
-    for (var i = 0; i < cartRemove.length; i++) {
-        cartRemove[i].addEventListener("click", removeProducts)
-    }
+    const cartContainer = document.querySelector(".list");
+    cartContainer.addEventListener("click", function (event) {
+        if (event.target.classList.contains("cart-remover") || event.target.closest(".cart-remover")) {
+            removeProducts(event);
+        }
+    });
 
     const quanittyinputs = document.getElementsByClassName("qtd")
     for (var i = 0; i < quanittyinputs.length; i++) {
@@ -33,99 +35,141 @@ function ready() {
     purshasebutton.addEventListener("click", makePurchase)
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const finalizarCompraBtn = document.getElementById('finalizar-compra');
+    const carrinhoLista = document.querySelector('.list');
+
+    finalizarCompraBtn.addEventListener('click', () => {
+        if (carrinhoLista.innerHTML.trim() === '') {
+            return;
+        } else {
+            carrinhoLista.innerHTML = '';
+            const valorTotalElement = document.querySelector(".finish > div > p");
+            if (valorTotalElement) {
+                valorTotalElement.innerHTML = 'Valor total: R$0.00';
+            }
+        }
+    });
+});
+
 function makePurchase() {
     if (valorTotal == "") {
-        alert('Seu carrinho esta vazio!!')
+        return;
     } else {
-        alert(`
-            Obrigado pela sua  compra!
-            Valor do pedido: R$${valorTotal}
-            Volte sempre :)
-        `)
+        valorTotal = '';
     }
 
-    document.querySelector("body > main > main > div.list").innerHTML = ""
+    document.getElementsByClassName(`list`).innerHTML = ""
     atualiza()
 }
 
 function removeProducts(event) {
-    event.target.parentElement.parentElement.remove()
-    atualiza()
+    const button = event.target;
+    button.parentElement.parentElement.remove();
+    atualiza();
 }
 
 function atualiza() {
-    const precos = document.getElementsByClassName("cart-price")
-    const qtd = document.getElementsByClassName("qtd")
-    valorTotal = 0;
-    for (var i = 0; i < precos.length; i++) {
-        var pegaValor = parseFloat(precos[i].innerHTML.replace("R$", "").replace(",", "."));
-        console.log(pegaValor)
-        if (qtd[i].value < 1) {
-            qtd[i].addEventListener("change", removeProducts)
-        }
-        else {
-            valorTotal += pegaValor * qtd[i].value
-        }
+    const precos = document.getElementsByClassName("cart-price");
+    const qtd = document.getElementsByClassName("qtd-input");
+    let valorTotal = 0;
 
+    for (let i = 0; i < precos.length; i++) {
+        const pegaValor = parseFloat(precos[i].innerText.replace("R$", "").replace(".", "").replace(",", "."));
+        const quantidade = parseInt(qtd[i].value);
+
+        if (quantidade > 0) {
+            valorTotal += pegaValor * quantidade;
+        }
     }
-    document.querySelector("body > main > div.finish > div > h3").innerHTML = `Valor total: R$${valorTotal.toFixed(2)}`
+
+    const valorTotalElement = document.querySelector(".finish > div > p");
+    if (valorTotalElement) {
+        valorTotalElement.innerHTML = `Valor total: R$${valorTotal.toFixed(2).replace(".", ",")}`;
+    }
 }
 
 function addProduct(event) {
-    const button = event.target
-    const productInfo = button.parentElement.parentElement.parentElement
-    const productInfoElementImage = productInfo.getElementsByClassName("image-Product")[0].src
-    const productInfoElementName = productInfo.getElementsByClassName("name-product")[0].innerHTML
-    const productInfoElementPrice = productInfo.getElementsByClassName("price-product")[0].innerHTML
+    const button = event.target;
+    const productInfo = button.parentElement.parentElement.parentElement;
+    const productImage = productInfo.querySelector(".image-Product").src;
+    const productName = productInfo.querySelector(".name-product").innerText;
+    const productPrice = productInfo.querySelector(".price-product").innerText;
 
-    const productInfoElementsNames = productInfo.parentElement.parentElement.getElementsByClassName("cart-name")
-    for (var i = 0; i < productInfoElementsNames.length; i++) {
-        if (productInfoElementsNames[i].innerHTML === productInfoElementName) {
-            productInfoElementsNames[i].parentElement.parentElement.getElementsByClassName("qtd")[0].value++
-            atualiza()
-            alert(`
-                Produto já existe no carrinho
-                Acrescentado mais 1 a quantidade do Produto
-                Quantidade atual do produto: ${document.getElementsByClassName("qtd")[0].value++}
-                
-            `)
-            document.getElementsByClassName("qtd")[0].value -= 1
-
-            return
+    const cartItems = document.querySelectorAll(".cart-name");
+    for (let item of cartItems) {
+        if (item.innerText === productName) {
+            const quantityInput = item.parentElement.parentElement.querySelector(".qtd-input");
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            atualiza();
+            return;
         }
     }
 
-    let newProductAdd = document.createElement("div")
-    newProductAdd.classList.add("list")
+    const cartList = document.querySelector(".list");
+    const cartItem = document.createElement("div");
+    cartItem.classList.add("cart-product");
+    cartItem.innerHTML = `
+        <div class="cart-image">
+            <img src="${productImage}" class="image-cart" alt="" width="100%" height="auto">
+        </div>
+        <div>
+            <p class="cart-name">${productName}</p>
+        </div>
+        <div>
+            <p class="cart-price">${productPrice}</p>
+        </div>
+        <div>
+            <input type="number" class="qtd-input" value="1" min="1">
+        </div>
+        <div>
+            <button class="cart-remover">Remover</button>
+        </div>
+    `;
+    cartList.appendChild(cartItem);
 
-    newProductAdd.innerHTML =
-        `
-        <div class="cart-image"><img src="${productInfoElementImage}" class="image-cart" alt="" width="150px" height="auto"></div>
-        <div><h1 class="cart-name">${productInfoElementName}</h1></div>
-        <div><h1 class="cart-price">${productInfoElementPrice}</h1></div>
-        <div><input type="number" class="qtd" value="1" min="0"></div>
-        <button class="cart-remover"><H3>REMOVER</H3></button>
-    `
+    cartItem.querySelector(".qtd-input").addEventListener("change", chackInputQauntidade);
+    cartItem.querySelector(".cart-remover").addEventListener("click", removeProducts);
 
-    alert('Produto adicionado')
-
-    const body = document.querySelector("body > main > main > div.list")
-
-    body.append(newProductAdd)
-
-
-
-    newProductAdd.getElementsByClassName("qtd")[0].addEventListener("change", chackInputQauntidade)
-    newProductAdd.getElementsByClassName("cart-remover")[0].addEventListener("click", removeProducts)
-
-    atualiza()
+    atualiza();
 }
 
 function chackInputQauntidade(event) {
-    if (event.target.value == "0") {
-        event.target.parentElement.parentElement.remove()
+    const input = event.target;
+    if (input.value < 1) {
+        input.value = 1;
     }
-
-
-    atualiza()
+    atualiza();
 }
+
+function showAlert(message, duration = 3000) {
+    const alertBox = document.createElement('div');
+    alertBox.textContent = message;
+    alertBox.style.position = 'fixed';
+    alertBox.style.top = '50px';
+    alertBox.style.left = '10px';
+    alertBox.style.backgroundColor = 'rgba(184, 5, 184, 0.8)';
+    alertBox.style.color = 'white';
+    alertBox.style.padding = '10px 20px';
+    alertBox.style.borderRadius = '5px';
+    alertBox.style.zIndex = '99999999';
+    alertBox.style.fontFamily = 'Arial, sans-serif';
+    alertBox.style.fontSize = '14px';
+    alertBox.style.boxShadow = '0 4px 6px rgba(230, 7, 241, 0.2)';
+    alertBox.style.opacity = '0';
+    alertBox.style.transition = 'opacity 0.3s ease';
+
+    document.body.appendChild(alertBox);
+
+    setTimeout(() => {
+        alertBox.style.opacity = '1';
+    }, 10);
+
+    setTimeout(() => {
+        alertBox.style.opacity = '0';
+        setTimeout(() => {
+            alertBox.remove();
+        }, 300);
+    }, duration);
+}
+
