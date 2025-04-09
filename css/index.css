@@ -72,7 +72,7 @@ body{
 }
 
 .finish {
-    grid-row: 3; /* Posiciona o .finish na última linha do grid */
+    grid-row: 3;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -131,7 +131,7 @@ body{
 
 .carrinho-aberto {
     display: grid;
-    grid-template-rows: auto 1fr auto; /* Divide o grid em 3 linhas */
+    grid-template-rows: auto 1fr auto;
     position: absolute;
     width: 0;
     border-radius: 12px;
@@ -224,7 +224,7 @@ footer{
 }
 
 .cart{
-    grid-row: 2; /* Posiciona o carrinho na segunda linha do grid */
+    grid-row: 2;
     overflow-y: auto;
 }
 
