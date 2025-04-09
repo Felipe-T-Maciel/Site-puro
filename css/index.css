@@ -1,11 +1,14 @@
+/* Importando fontes externas do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
 
+/* Reset de margens e configuração de box-sizing */
 * {
     margin: 0 0 0 0;
     box-sizing: border-box;
 }
 
+/* Estilização do header fixo no topo */
 header{
     width:100%;
     height: 80px;
@@ -21,14 +24,16 @@ header{
     z-index: 99999;
 }
 
+/* Estilo do corpo da página com imagem de fundo fixa */
 body{
     margin: 0;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: contain; /* será sobrescrito pela próxima linha */
     background-size: cover;
     background-attachment: fixed;
 }
 
+/* Imagens dos cards dentro do container */
 .container > div > img{
     height: 14rem;
     border-radius: 12px;
@@ -38,15 +43,17 @@ body{
     background-color: rgba(128, 128, 128, 0.5);
 }
 
+/* Efeito hover nas imagens dos cards */
 .container >div > img:hover{
     background-color: rgba(128, 128, 128, 0.9) ;
-    border: 3px solid rgb(184, 5, 184);;
+    border: 3px solid rgb(184, 5, 184);
     transition: .2s all;
     scale: 1.05;
     z-index: 1;
     cursor: pointer;
 }
 
+/* Container principal dos cards */
 .container{
     display: flex;
     justify-content: space-evenly;
@@ -55,6 +62,7 @@ body{
     font-family: 'Oswald', sans-serif;
 }
 
+/* Parágrafos nos detalhes dos produtos */
 .container > div >div> div> p{
     margin-top: 7px;
     font-family: 'Inter';
@@ -62,16 +70,18 @@ body{
     font-size: 17px;
     line-height: 15px;
     font-family: 'Oswald', sans-serif;
-    
 }
 
+/* Container de título e botão nos cards */
 .container > div >div {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Estilização da área de finalização de compra */
 .finish {
+    margin-top: 1rem;
     grid-row: 3;
     display: flex;
     justify-content: space-between;
@@ -83,8 +93,9 @@ body{
     color: white;
 }
 
+/* Botão de finalizar compra */
 .finish-him > button{
-    background-color: rgb(184, 5, 184);;
+    background-color: rgb(184, 5, 184);
     border-radius: 6px;
     border: none;
     padding-top: 3px;
@@ -95,22 +106,26 @@ body{
     transition: .2s ease-in-out;
 }
 
+/* Hover do botão finalizar compra */
 .finish-him > button:hover{
     scale: 1.05;
     border: 2px solid white ;
 }
 
+/* Estilo do preço do produto */
 .p-price{
     color:rgb(184, 5, 184);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
+/* Slides de imagens */
 .slides{
     margin-top: 1%;
     display: flex;
     justify-content: center;
 }
 
+/* Container do cabeçalho */
 .cabecalho-container{
     display: flex;
     justify-content: space-between;
@@ -118,17 +133,20 @@ body{
     width: 60%;
 }
 
+/* Ícone do carrinho */
 .carrinho{
     color: white;
     cursor: pointer;
     transition: .2s all;
 }
 
+/* Hover do carrinho */
 .carrinho:hover{
     scale: 1.15;
     transition: .2s all;
 }
 
+/* Carrinho fechado (estilo inicial) */
 .carrinho-aberto {
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -143,9 +161,9 @@ body{
     opacity: 0;
     padding: 1rem;
     transition: max-height 0.2s ease, width 0.2s ease,opacity 0.2s ease;
-}   
+}
 
-
+/* Carrinho aberto (classe dinâmica adicionada via JS) */
 .carrinho-aberto.aberto {
     max-height: 40rem;
     width: 25rem;
@@ -154,20 +172,24 @@ body{
     padding-left: 1rem; 
 }
 
+/* Fonte padrão do body */
 body {
     font-family: 'Kanit', sans-serif;
 }
 
+/* Slides com tamanho fixo */
 .mySlides{
     height: 200px;
     width: fit-content;
     margin: 0;
 }
 
+/* Linha divisória */
 hr{
     column-gap: 2rem;
 }
 
+/* Estilização do rodapé */
 footer{
     margin-top: 3rem;
     width: 100%;
@@ -179,15 +201,18 @@ footer{
     padding-top: 30px;
 }
 
+/* Remove a barra de rolagem padrão do navegador */
 ::-webkit-scrollbar {
     display: none;
 }
 
+/* Compatibilidade com outros navegadores */
 * {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
+/* Estilo dos ícones das redes sociais */
 .redes>a>img{
     width: 35px;
     height: 35px;
@@ -199,6 +224,7 @@ footer{
     margin-left: 2rem;
 }
 
+/* Animação para transição de slides */
 @keyframes slideChange {
     0% {
         opacity: 0;
@@ -215,19 +241,23 @@ footer{
     }
 }
 
+/* Aplicação da animação nos slides */
 .mySlides {
     animation: slideChange 0.7s ease-in-out;
 }
 
+/* Espaçamento adicional */
 .direitos{
     margin-top: 100px;
 }
 
+/* Área principal do carrinho */
 .cart{
     grid-row: 2;
     overflow-y: auto;
 }
 
+/* Área de conteúdo do carrinho com rolagem */
 .list-content{
     max-height: 5rem;
     width: 100%;
@@ -243,6 +273,7 @@ footer{
     font-size: 10px;
 }
 
+/* Cabeçalho da lista do carrinho */
 .cart-tips{
     padding-left: 1%;
     font-size: 10px;
@@ -256,6 +287,7 @@ footer{
     transform: translateX(-7%);
 }
 
+/* Coluna de quantidade com leve deslocamento */
 .qtd{
     transform: translateX(10%);
 }
@@ -270,7 +302,7 @@ footer{
     width: 2rem;
 }
 
-
+/* Estilo para nomes de produtos longos */
 .cart-name{
     white-space: nowrap;
     overflow: hidden;
@@ -278,13 +310,13 @@ footer{
     max-width: 80%;
 }
 
-
+/* Layout dos produtos no carrinho */
 .cart-product{
     display: grid;
     width: 100%;
     grid-template-columns: 21% 28% 25% 25%;
     grid-template-rows: 2rem;
-    font-size: 10px;
+    font-weight: 600;
     justify-items: start;
     gap: 2%;    
     align-items: center;
@@ -293,11 +325,12 @@ footer{
     color: white;
 }
 
+/* Imagem do produto no carrinho */
 .cart-image{
     max-width: 90%;
 }
 
-
+/* Botão para remover produto do carrinho */
 .cart-remover{
     background-color: rgb(184, 5, 184);
     color: rgb(230, 230, 230);
@@ -317,6 +350,7 @@ footer{
     background-color: rgb(184, 5, 184);
 }
 
+/* Container do botão remover */
 .cart-remover-parent{
     width: 100%;
     display: flex;
@@ -325,12 +359,13 @@ footer{
     justify-content: end;
 }
 
+/* Botão adicionar ao carrinho */
 .addCart{
     margin-right: 15px;
     width: 6rem;
     font-weight: 900;
     color: rgb(240, 240, 240);
-    background-color: rgb(184, 5, 184);;
+    background-color: rgb(184, 5, 184);
     border-radius: 8px;
     border: none;
     font-family: 'Kanit', sans-serif;
